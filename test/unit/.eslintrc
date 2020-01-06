@@ -1,0 +1,11 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "extends": 'bfe',
+  "globals": {
+    "expect": true,
+    "sinon": true,
+    "vendor_library": true
+  }
+}
