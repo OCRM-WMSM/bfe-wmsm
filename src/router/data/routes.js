@@ -1,6 +1,7 @@
 import Home from '@pages/Home'
 import Login from '@pages/login/Login'
 import Dict from '@pages/Dict'
+import ResetPwd from '@pages/ResetPwd'
 const Trans = resolve => require(['@pages/Trans'], resolve)
 
 /**
@@ -52,6 +53,13 @@ const routes = [
     component: Home,
     meta: {
       title: '外币预约'
+    }
+  },
+  {
+    path: '/resetPwd',
+    component: ResetPwd,
+    meta: {
+      title: '密码修改'
     }
   },
   {

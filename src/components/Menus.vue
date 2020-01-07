@@ -62,7 +62,8 @@
         }, {
           name: '账户管理',
           id: 'account',
-          index: '/account'
+          index: '/account',
+          hasChild: true
         }, {
           name: '转账汇款',
           id: 'transfer',
