@@ -8,7 +8,7 @@
         </div>
         <div class="topbar__links col-sm-4">
           <a>个人设置</a>
-          <a>消息中心</a>
+          <router-link to="/resetPwd" class="text-center" ><a>密码修改</a></router-link>
           <a>在线客服</a>
           <a @click="changeLan">{{$t('topbar.changelan')}}</a>
           <a @click="logout">安全退出</a>
