@@ -7,6 +7,7 @@ var {Message} = require("bfe-ui");
 const httpConfig = {
   timeout: 5000,
   contentType: 'application/x-www-form-urlencoded',
+  //contentType: 'application/json',
   baseUrl: '',
 
   reqInterceptors: (config) => {
@@ -48,6 +49,7 @@ const httpConfig = {
           message: "服务器异常，请联系管理员！",
           showClose: true
         });
+        return;
       }
     }
     return res;

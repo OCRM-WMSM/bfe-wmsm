@@ -1,95 +1,113 @@
 <template>
-   <div style="width:40%;margin-left:25%;margin-top:5%">
-     <bfe-form :label-position="labelPosition" label-width="80px" :model="pwdForm" :rules="rules" ref="pwdForm">
-        <bfe-form-item label="旧密码" prop="oldPassword">
-          <bfe-input v-model="pwdForm.oldPassword" type="password"></bfe-input>
-        </bfe-form-item>
-        <bfe-form-item label="新密码" prop="newPassword">
-          <bfe-input v-model="pwdForm.newPassword" type="password"></bfe-input>
-        </bfe-form-item>
-        <bfe-form-item label="确认密码" prop="checkPassword">
-          <bfe-input v-model="pwdForm.checkPassword" type="password"></bfe-input>
-        </bfe-form-item>
-        <bfe-form-item>
-          <bfe-button type="primary" @click="submitForm('pwdForm')">提交</bfe-button>
-          <bfe-button @click="resetForm('pwdForm')">重置</bfe-button>
-        </bfe-form-item>
-      </bfe-form>
-   </div>
+ <div>
+  <bfe-form :inline="true" :model="formInline" class="demo-form-inline">
+    <bfe-form-item label="编号">
+      <bfe-input v-model="formInline.userNo" placeholder="编号"></bfe-input>
+    </bfe-form-item>
+    <bfe-form-item label="姓名">
+      <bfe-input v-model="formInline.name" placeholder="姓名"></bfe-input>
+    </bfe-form-item>
+    <bfe-form-item>
+      <bfe-button type="primary" @click="submitForm()">查询</bfe-button>
+    </bfe-form-item>
+  </bfe-form>
+  <bfe-table
+    :data="tableData"
+    stripe
+    style="width: 100%">
+    <bfe-table-column
+      prop="userNo"
+      label="编号"
+      width="180">
+    </bfe-table-column>
+    <bfe-table-column
+      prop="name"
+      label="姓名"
+      width="180">
+    </bfe-table-column>
+    <bfe-table-column label="操作">
+      <template slot-scope="scope">
+        <bfe-button
+          size="small"
+          @click="handleReset(scope.$index, scope.row.userNo)">密码重置</bfe-button>
+      </template>
+    </bfe-table-column>
+  </bfe-table>
+
+  <bfe-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+  </bfe-pagination>
+</div>
 </template>
 
 <script>
-export default {
-  data() {
-    //校验规则
-    var validateNew = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入新密码'));
-      } else if (value.length < 6 || value.length > 18) {
-        callback(new Error('长度在 6 到 18 个字符!'));
-      } else if (value === this.pwdForm.oldPassword) {
-        callback(new Error('新密码不能与旧密码相同!'));
-      } else {
-        callback();
+  export default {
+    data() {
+      return {
+        formInline: {
+          userNo: '',
+          name: ''
+        },
+        tableData: [{
+          userNo: '10010',
+          name: '王小虎'
+        }, {
+          userNo: '10011',
+          name: '王小虎2'
+        }, {
+          userNo: '10012',
+          name: '王小虎3'
+        }, {
+          userNo: '10013',
+          name: '王小虎4'
+        }],
+        currentPage: 1,
+        total: 400,
+        pageSize: 10
       }
-    };
-    var validateCheck = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入确认密码'));
-      } else if (value !== this.pwdForm.newPassword) {
-        callback(new Error('两次输入密码不一致!'));
-      } else {
-        callback();
-      }
-    };
-    return {
-      pwdForm: {
-        oldPassword: '',
-        newPassword: '',
-        checkPassword: ''
-      },
-      rules: {
-        oldPassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }
-        ],
-        newPassword: [
-          { validator: validateNew, trigger: 'blur' }
-        ],
-        checkPassword: [
-          { validator: validateCheck, trigger: 'blur' }
-        ]
-      }
-    }
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$http.post('/api/resetPwd', this.pwdForm).then(res => {
-            //修改成功
+    },
+    //页面初始化调用，节点还未渲染
+    created() {
+      this.submitForm();
+    },
+    methods: {
+      submitForm() {
+        //JSON.stringify(this.formInline)
+        this.$http.post('/api/queryUser', {condition: this.formInline, currentPage: this.currentPage,
+          pageSize: this.pageSize}, {headers: {'Content-Type': 'application/json'}}).then(res => {
+          //修改成功
             if(this.$CU.isSuccess(res)) {
-              this.$message({
-                message: '修改成功',
-                type: 'success'
-              });
+              console.log(this.$CU.getResData(res).data);
+              this.tableData = this.$CU.getResData(res).data.list
+              this.total = this.$CU.getResData(res).data.total
             }
           })
-          .catch(err => {
-            // console.log(err);
-            err
-            //this.$alert('无法连接后台，请稍后再试！', '网络错误：', {confirmButtonText: '确定'});
-          })
-        } else {
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+      },
+      handleReset(index, userNo) {
+        this.$message({
+          message: '重置成功，重置的用户编号： ' + userNo,
+          type: 'success'
+        });
+      },
+      handleSizeChange(val) {
+        this.pageSize = val;
+        console.log(`每页 ${val} 条`);
+        console.log(this.pageSize);
+        this.submitForm();
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+        console.log(`当前页: ${val}`);
+        console.log(this.currentPage);
+        this.submitForm();
+      }
     }
+
   }
-}
 </script>
-<style scoped>
-</style>

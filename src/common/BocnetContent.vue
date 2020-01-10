@@ -2,7 +2,16 @@
   <div class="page-container">
     <div class="page-container-background" v-if="!fullScreen">
       <div class="page-container__main container" >
-        <router-view></router-view>
+        <div class="row" style="margin-top:10px;margin-bottom:10px;">
+          <bfe-breadcrumb separator=">" style="font-size:16px">
+            <bfe-breadcrumb-item :to="{ path: '/' }" >首页</bfe-breadcrumb-item>
+            <bfe-breadcrumb-item>活动管理</bfe-breadcrumb-item>
+            <bfe-breadcrumb-item>活动详情</bfe-breadcrumb-item>
+          </bfe-breadcrumb>
+         </div>
+         <div class="row">
+           <router-view></router-view>
+        </div>
       </div>
     </div>
     <router-view v-if="fullScreen"></router-view>
@@ -14,7 +23,7 @@
     name: 'BocnetContent',
     data() {
       return {
-        fullScreen: false  // 默认不全屏
+        fullScreen: true  // 默认不全屏
       };
     },
     beforeMount() {

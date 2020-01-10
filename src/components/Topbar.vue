@@ -1,17 +1,21 @@
 <template>
   <div class="topbar">
-    <div class="container">
-      <div class="topbar__content row">
-        <div class="col-sm-4"></div>
-        <div class="topbar__search col-sm-4">
-          <bfe-input class="" placeholder="功能搜索" icon="search" size="mini"></bfe-input>
+    <div class="container" >
+      <div class="topbar__content">
+        <div class="col-sm-10">
+          <div class="logo">
+          </div>
         </div>
-        <div class="topbar__links col-sm-4">
-          <a>个人设置</a>
-          <router-link to="/resetPwd" class="text-center" ><a>密码修改</a></router-link>
-          <a>在线客服</a>
-          <a @click="changeLan">{{$t('topbar.changelan')}}</a>
-          <a @click="logout">安全退出</a>
+        <div class="topbar__links col-sm-2">
+          <div class="row row-right-up" >
+            <bfe-icon name="person" size="20"></bfe-icon><a>总行业务管理人员</a>
+            <a @click="logout">张云鹏</a>
+          </div>
+          <div class="row row-right-up" >
+            <router-link to="/resetPwd" class="text-center" ><a>密码修改</a></router-link>
+            <a @click="logout">安全退出</a>
+          </div>
+
         </div>
       </div>
     </div>
@@ -39,15 +43,16 @@
 </script>
 <style>
 .topbar{
-  background-color: #ffffff
+  background-color: #ffffff;
+  padding: 0px;
 }
 
 .topbar .container {
-  width: 1002px;
+  width: 100%;
+  margin: 0px
 }
 .topbar__content{
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 0px;
 }
 .topbar__links{
 
@@ -62,6 +67,22 @@
 
 .topbar__links a :hover{
   text-decoration: none;
+}
+
+.logo {
+  width: 430px;
+  height: 40px;
+  --margin: 18px auto;
+  margin-top:5px;
+  margin-left:5px;
+  overflow: hidden;
+  background-image: url(../assets/img/banner_logo.png);
+  --background-size: cover;
+  background-repeat: no-repeat;
+}
+.row-right-up {
+  --padding-left:20%;
+  margin-top:5px
 }
 
 </style>

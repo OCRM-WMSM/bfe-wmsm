@@ -10,7 +10,7 @@ var CommonUtil = {}
  */
 CommonUtil.getResData = function(res) {
   if(CommonUtil.isSuccess(res)) {
-    return res.data.data;
+    return res.data;
   }else{
     // console.log('请求报错了')
   }

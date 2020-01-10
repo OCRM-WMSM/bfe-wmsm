@@ -6,8 +6,10 @@
     <bocnet-content>
     </bocnet-content>
 
+    <!--
     <bocnet-footer>
     </bocnet-footer>
+  -->
   </div>
 </template>
 

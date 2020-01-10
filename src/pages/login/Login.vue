@@ -14,16 +14,6 @@
         </div>
         <div class="col-md-6">
         </div>
-        <div class="col-md-3">
-          <div class="online-helper">
-            <img src="../../assets/img/online-helper.png"/>
-            <a title="在线客服">在线客服</a>
-            <img src="../../assets/img/lang-english.png"/>
-            <a title="English">English</a>
-            <img src="../../assets/img/login-help.png"/>
-            <a title="帮助">帮助</a>
-          </div>
-        </div>
       </div>
     </div>
     <div class="login-bg">
@@ -49,64 +39,8 @@
             <h4 class="nav-title"><b>安全提示</b></h4>
             <li class="sf-hint">
               <label><b>·</b></label>
-              <span>
-                <span lan="l6278" _zipIdx="40">首次登录时，请下载并安装</span>
-                <a href="https://dlsev.boc.cn/support/secWidgets/SecEdit.BOC.exe" urllan="url.secDownloadUrl">Windows</a>
-                <span lan="l14796" _zipIdx="40">或</span>
-                <a href="https://dlsev.boc.cn/support/secWidgets/npBOCMACSip_Product.pkg" urllan="url.secDownloadUrl.Mac">Mac</a>
-                <span lan="l4126" _zipIdx="40">“网上银行登录安全控件”</span>
-                <span lan="l10641" _zipIdx="40">。</span>
-              </span>
+              <span lan="l6282" _zipIdx="40">敬请使用Chrome70及以上版本浏览器</span>
             </li>
-            <li class="sf-hint">
-              <label><b>·</b></label>
-              <span>
-                <span lan="l6280" _zipIdx="40">请持有中银E盾的客户，下载并安装</span>
-                <a href="https://dlsev.boc.cn/support/drivers/BOC_TotalPackage.exe" urllan="url.USBKeyMgr">Windows</a>
-                <span lan="l14796" _zipIdx="40">或</span>
-                <a href="https://dlsev.boc.cn/support/drivers/BOC_Setup.dmg" urllan="url.USBKeyMgr.Mac">Mac</a>
-                <span lan="l6281" _zipIdx="40">“USBKey管理工具”</span>
-                <span lan="l10641" _zipIdx="40">。</span>
-              </span>
-            </li>
-            <li class="sf-hint">
-              <label><b>·</b></label>
-              <span lan="l4627" _zipIdx="40">网上银行服务使用完毕后，请点击页面右上角的“安全退出”按钮退出服务。</span>
-            </li>
-            <li class="sf-hint">
-              <label><b>·</b></label>
-              <span lan="l6282" _zipIdx="40">通过银行柜台注册的网银客户，在首次登录时，请使用注册时获取的“网银初始用户名”。首次登录成功后，您可对登录用户名重新进行设定。</span>
-            </li>
-          </ul>
-        </div>
-        <div class="col-sm-6">
-          <span class="nav-front">|</span>
-          <h4 class="nav-title"><b>在线服务</b></h4>
-          <ul class="os-box">
-            <dl class="col-xs-3">
-              <dd><a>在线开户</a></dd>
-              <dd><a>网点预约</a></dd>
-              <dd><a>申请贷款</a></dd>
-              <dd><a>回单验证</a></dd>
-            </dl>
-            <dl class="col-xs-3">
-              <dd><a>申请信用卡</a></dd>
-              <dd><a>中银快付</a></dd>
-              <dd><a>协议支付</a></dd>
-              <dd><a>快捷支付</a></dd>
-            </dl>
-            <dl class="col-xs-3">
-              <dd><a>预保留支付</a></dd>
-              <dd><a>服务热线</a></dd>
-              <dd><a>回单验证</a></dd>
-              <dd><a>常见问题</a></dd>
-            </dl>
-            <dl class="col-xs-3">
-              <dd><a>他行转账查询</a></dd>
-              <dd><a>电子银行章程</a></dd>
-              <dd><a>网银业务规则</a></dd>
-              <dd><a>CA证书下载</a></dd>
-            </dl>
           </ul>
         </div>
       </div>
@@ -139,12 +73,13 @@ export default {
   height: 87px;
 }
 .logo {
-  width: 159px;
-  height: 47px;
-  margin: 18px auto;
+  width: 550px;
+  height: 40px;
+  --margin: 18px auto;
+  margin-top:25px;
   overflow: hidden;
-  background-image: url(../../assets/img/logo-origin.png);
-  background-size: cover;
+  background-image: url(../../assets/img/banner_logo.png);
+  --background-size: cover;
   background-repeat: no-repeat;
 }
 .logo a {

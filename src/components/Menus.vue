@@ -2,9 +2,11 @@
   <div class="menus">
     <header class="container">
       <ul class="menu-items">
+        <!--
         <li class="menu-logo">
           <img src="../assets/img/logo-white.png" />
         </li>
+      -->
         <li class="menu__item" v-for="menu in menus" @mouseenter="handlemouseenter(menu.id)" @mouseleave="handlemouseleave">
           <router-link :to="menu.index" class="text-center" >{{menu.name}}</router-link>
         </li>

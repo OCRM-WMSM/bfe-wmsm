@@ -1,11 +1,5 @@
 <template>
   <div class="login-box">
-      <div class="login-switch">
-      </div>
-      <div class="subtitle">
-        <div class="boc-logo">
-        </div>
-      </div>
       <div class="login-block">
         <div class="message-block">
           <div v-show="showmessage">
@@ -23,7 +17,7 @@
           </label>
           -->
           <span class="iconfont">
-            <input class="login-text" v-model="username" placeholder="用户名/银行卡号登录" @keyup.enter="login()">
+            <input class="login-text" v-model="username" placeholder="用户名" @keyup.enter="login()">
           </span>
         </div>
         <div class="field password-field">
@@ -44,23 +38,6 @@
           </button>
         </div>
       </div>
-      <div class="login-link">
-          <ul class="login-link-left">
-            <li class="online-open">
-              <a>{{onlineopen}}</a>
-            </li>
-          </ul>
-          <ul class="login-link-right">
-            <li class="forgot-usr">
-              <a>{{forgotname}}</a>
-            </li>
-            <li class="nav-pipe">|</li>
-            <li class="forgot-pwd">
-              <a>{{forgotpwd}}</a>
-            </li>
-          </ul>
-        <div class="login-link nav"/>
-      </div>
   </div>
 </template>
 
@@ -74,10 +51,7 @@ export default {
       showmessage: false,
       logingerror: '请输入用户名和密码',
       hintmessage: '用户名和密码区分大小写字母',
-      loginbutton: '登 录',
-      onlineopen: '在线开通',
-      forgotname: '忘记用户名',
-      forgotpwd: '忘记密码'
+      loginbutton: '登 录'
     }
   },
 
@@ -144,7 +118,7 @@ export default {
             this.$router.go(-1);
           }*/
           var user = {
-            token: this.$CU.getResData(res).token
+            token: this.$CU.getResData(res).data.token
           }
           this.$store.commit('SAVE_USER', user);
           this.$store.commit('SAVE_TOKEN', user.token)
