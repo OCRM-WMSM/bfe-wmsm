@@ -14,12 +14,34 @@
         </div>
       </div>
     </div>
+    <router-view v-if="fullScreen"></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'BocnetContent'
+    name: 'BocnetContent',
+    data() {
+      return {
+        fullScreen: true  // 默认不全屏
+      };
+    },
+    beforeMount() {
+      if(this.$route.meta.fullScreen) {
+        this.fullScreen = true;
+      }else{
+        this.fullScreen = false;
+      }
+    },
+    watch: {
+      $route: function() {
+        if(this.$route.meta.fullScreen) {
+          this.fullScreen = true;
+        }else{
+          this.fullScreen = false;
+        }
+      }
+    }
   }
 
 </script>
