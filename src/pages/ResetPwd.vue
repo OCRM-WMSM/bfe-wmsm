@@ -79,8 +79,8 @@
     methods: {
       submitForm() {
         //JSON.stringify(this.formInline)
-        this.$http.post('/api/queryUser', {condition: this.formInline, currentPage: this.currentPage,
-          pageSize: this.pageSize}, {headers: {'Content-Type': 'application/json'}}).then(res => {
+        this.$http.post('/api/queryUser', {userNo: this.formInline.userNo, name: this.formInline.name, currentPage: this.currentPage,
+          pageSize: this.pageSize}).then(res => {
           //修改成功
             if(this.$CU.isSuccess(res)) {
               console.log(this.$CU.getResData(res).data);
