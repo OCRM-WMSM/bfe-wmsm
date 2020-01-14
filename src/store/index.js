@@ -13,14 +13,14 @@ Vue.use(Vuex)
 const state = {
   locale: 'zh',
   user: {
-    id: '',
+    employeeId: '',
     name: '',
     gender: '',
-    lastlogintime: '',
-    avatar: '',
-    pwdExpired: true,
-    branchid: '',
-    branchname: ''
+    orgCode: '',
+    empRole: '',
+    lastMaintDate: true,
+    onlineFlag: '',
+    orgName: ''
   },
   token: null
 }

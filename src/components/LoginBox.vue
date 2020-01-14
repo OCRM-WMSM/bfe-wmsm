@@ -72,67 +72,28 @@ export default {
         return;
       }
       this.showmessage = false;
-      /**
-      this.$http.get('/api/userlogin')
-        .then(res => {
-          let token = res.data.token;
-          let user = res.data.user;
-          this.$store.dispatch('saveToken', token);
-          this.$store.dispatch('saveUser', user);
-          this.$router.go(-1);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-      **/
       this.$http.post('/api/login', {
-        loginName: this.username,
-        password: this.pwd,
+        username: this.username,
+        //password: this.pwd,
+        password: this.$CU.md5(this.pwd),
         imageCode: ''
       }).then(res => {
         //当登录成功时
         if(this.$CU.isSuccess(res)) {
-          //从res中获取登录用户信息
-          /**var user = {
-            id: this.$CU.getResData(res).empNo,
-            name: this.$CU.getResData(res).empName,
-            gender: this.$CU.getResData(res).holderSex,
-            lastlogintime: this.$CU.getResData(res).lastLoginTime,
-            avatar: this.$CU.getResData(res).holderImage,
-            pwdExpired: this.$CU.getResData(res).pwdExpired,
-            branchid: this.$CU.getResData(res).branchId,
-            branchname: this.$CU.getResData(res).branchName
-          }
-          //当密码过期时引导客户修改密码
-          if(user.pwdExpired) {
-            this.$store.dispatch('saveUser', {
-              user: user,
-              token: 'xxxxxxx'
-            });
-            // this.$store.dispatch('saveToken')
-            //this.$alert(res.code, '您的密码已过期，请重置密码后再登录。', {confirmButtonText: '重置密码'});
-            this.$router.go(-1);
-          } else {
-            //this.$store.dispatch('saveToken', token);
-            this.$store.dispatch('saveUser', user);
-            this.$router.go(-1);
-          }*/
-          var user = {
-            token: this.$CU.getResData(res).data.token
-          }
+          let token = this.$CU.getResData(res).data.token;
+          let user = this.$CU.getResData(res).data.user;
           this.$store.commit('SAVE_USER', user);
-          this.$store.commit('SAVE_TOKEN', user.token)
-          console.log(user.token);
+          this.$store.commit('SAVE_TOKEN', token)
           this.$router.push("/home");
         } else {
-          this.$alert(this.$CU.getErr(res).message + '(' + this.$CU.getErr(res).code + ')', '报错啦', {confirmButtonText: '确定'});
+          this.$alert('请确认用户名和密码是否正确！', '登录失败', {confirmButtonText: '确定'});
         }
 
       })
       .catch(err => {
         // console.log(err);
         err
-        this.$alert('无法连接后台，请稍后再试！', '网络错误：', {confirmButtonText: '确定'});
+        this.$alert('系统异常', '登录失败：', {confirmButtonText: '确定'});
       })
     }
   }

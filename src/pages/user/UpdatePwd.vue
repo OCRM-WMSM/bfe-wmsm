@@ -44,6 +44,7 @@ export default {
     };
     return {
       pwdForm: {
+        employeeId: this.$store.state.user.employeeId,
         oldPassword: '',
         newPassword: '',
         checkPassword: ''
@@ -66,13 +67,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post('/api/resetPwd', this.pwdForm).then(res => {
+          this.$http.post('/api/user/updatePwd', this.pwdForm).then(res => {
             //修改成功
             if(this.$CU.isSuccess(res)) {
               this.$message({
                 message: '修改成功',
                 type: 'success'
               });
+              this.$store.dispatch('logout');
+              this.$router.push("/login");
             }
           })
         } else {

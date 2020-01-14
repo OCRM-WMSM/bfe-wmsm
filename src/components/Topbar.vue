@@ -9,10 +9,10 @@
         <div class="topbar__links col-sm-2">
           <div class="row row-right-up" >
             <bfe-icon name="person" size="20"></bfe-icon><a>总行业务管理人员</a>
-            <a @click="logout">张云鹏</a>
+            <a>{{ this.$store.state.user.name }}</a>
           </div>
           <div class="row row-right-up" >
-            <router-link to="/resetPwd" class="text-center" ><a>密码修改</a></router-link>
+            <router-link to="/UpdatePwd" class="text-center" ><a>密码修改</a></router-link>
             <a @click="logout">安全退出</a>
           </div>
 
@@ -30,6 +30,7 @@
     methods: {
       logout() {
         this.$store.dispatch('logout');
+        this.$router.push("/login");
       },
       changeLan() {
         if(this.$i18n.locale === 'zh') {

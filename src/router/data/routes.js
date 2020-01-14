@@ -1,8 +1,9 @@
 import Home from '@pages/Home'
 import Login from '@pages/login/Login'
 import Dict from '@pages/Dict'
-import ResetPwd from '@pages/ResetPwd'
-const Trans = resolve => require(['@pages/Trans'], resolve)
+import UpdatePwd from '@pages/user/UpdatePwd'
+import UserManager from '@pages/user/UserManager'
+//const Trans = resolve => require(['@pages/Trans'], resolve)
 
 /**
  * 路由数据模型
@@ -26,11 +27,11 @@ const routes = [
     }
   },
   {
-    path: '/transfer',
-    component: Trans,
+    path: '/user',
+    component: UserManager,
     meta: {
-      requireAuth: false,
-      title: '转账'
+      requireAuth: true,
+      title: '用户管理'
     }
   },
   {
@@ -56,9 +57,10 @@ const routes = [
     }
   },
   {
-    path: '/resetPwd',
-    component: ResetPwd,
+    path: '/UpdatePwd',
+    component: UpdatePwd,
     meta: {
+      requireAuth: true,
       title: '密码修改'
     }
   },

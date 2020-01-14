@@ -62,10 +62,9 @@
           id: 'welcome',
           index: '/home'
         }, {
-          name: '账户管理',
-          id: 'account',
-          index: '/account',
-          hasChild: true
+          name: '用户管理',
+          id: 'userManager',
+          index: '/user'
         }, {
           name: '转账汇款',
           id: 'transfer',
