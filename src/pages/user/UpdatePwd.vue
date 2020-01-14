@@ -76,6 +76,8 @@ export default {
               });
               this.$store.dispatch('logout');
               this.$router.push("/login");
+            }else{
+              this.$alert(this.$CU.getErr(res).msg, '修改失败', {confirmButtonText: '确定'});
             }
           })
         } else {

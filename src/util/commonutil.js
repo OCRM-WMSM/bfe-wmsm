@@ -26,7 +26,8 @@ CommonUtil.getErr = function(res) {
   if(!CommonUtil.isSuccess(res)) {
     return {
       code: res.data.code,
-      message: res.data.msg
+      msg: res.data.msg,
+      data: res.data.data
     }
   }
 }
