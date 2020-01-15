@@ -9,7 +9,7 @@
         <div class="topbar__links col-sm-2">
           <div class="row row-right-up" >
             <bfe-icon name="person" size="20"></bfe-icon><a>总行业务管理人员</a>
-            <a>{{ this.$store.state.user.name }}</a>
+            <a>{{ username }}</a>
           </div>
           <div class="row row-right-up" >
             <router-link to="/UpdatePwd" class="text-center" ><a>密码修改</a></router-link>
@@ -25,6 +25,11 @@
 <script>
   export default {
     name: 'Topbar',
+    data() {
+      return {
+        username: this.$store.state.user.name
+      }
+    },
     computed: {
     },
     methods: {
