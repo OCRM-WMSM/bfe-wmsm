@@ -18,7 +18,7 @@ const state = {
     gender: '',
     orgCode: '',
     empRole: '',
-    lastMaintDate: true,
+    lastMaintDate: '',
     onlineFlag: '',
     orgName: ''
   },
