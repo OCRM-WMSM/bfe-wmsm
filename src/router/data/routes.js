@@ -1,8 +1,8 @@
 import Home from '@pages/Home'
 import Login from '@pages/login/Login'
-import Dict from '@pages/Dict'
 import UpdatePwd from '@pages/user/UpdatePwd'
 import UserManager from '@pages/user/UserManager'
+import DistributionSet from '@pages/distribute/DistributionSet'
 //const Trans = resolve => require(['@pages/Trans'], resolve)
 
 /**
@@ -43,10 +43,10 @@ const routes = [
     }
   },
   {
-    path: '/dict',
-    component: Dict,
+    path: '/distribute',
+    component: DistributionSet,
     meta: {
-      title: '代码字典'
+      title: '分发策略'
     }
   },
   {
