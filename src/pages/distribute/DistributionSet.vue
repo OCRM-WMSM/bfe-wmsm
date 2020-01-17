@@ -38,20 +38,19 @@
     style="width: 100%">
     <bfe-table-column
       prop="installmentType"
-      label="分期类型"
-      width="180">
+      label="分期类型">
     </bfe-table-column>
     <bfe-table-column
       prop="distribution"
-      label="分发策略"
-      width="180">
+      label="分发策略">
     </bfe-table-column>
     <bfe-table-column
       prop="channel"
-      label="分发渠道"
-      width="180">
+      label="分发渠道">
     </bfe-table-column>
   </bfe-table>
+  <div style="margin-top: 30px;">
+  </div>
   <bfe-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
