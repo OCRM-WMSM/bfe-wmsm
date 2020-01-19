@@ -20,7 +20,8 @@ const state = {
     empRole: '',
     lastMaintDate: '',
     onlineFlag: '',
-    orgName: ''
+    orgName: '',
+    currentRole: {}
   },
   token: null
 }
