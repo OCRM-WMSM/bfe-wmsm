@@ -66,9 +66,9 @@
           id: 'userManager',
           index: '/user'
         }, {
-          name: '转账汇款',
-          id: 'transfer',
-          index: '/transfer'
+          name: '分发策略',
+          id: 'distribute',
+          index: '/distribute'
         }, {
           name: '贷款管理',
           id: 'loan',
