@@ -7,8 +7,13 @@
           <img src="../assets/img/logo-white.png" />
         </li>
       -->
+      <!--
         <li class="menu__item" v-for="menu in menus" @mouseenter="handlemouseenter(menu.id)" @mouseleave="handlemouseleave">
           <router-link :to="menu.index" class="text-center" >{{menu.name}}</router-link>
+        </li>   -->
+
+        <li class="menu__item" v-for="menu in menus" @mouseenter="handlemouseenter(menu.menuId)" @mouseleave="handlemouseleave">
+          <router-link :to="menu.menuUrl" class="text-center" >{{menu.menuName}}</router-link>
         </li>
       </ul>
     </header>
@@ -28,6 +33,7 @@
     name: 'Menus',
     data() {
       return {
+        menus: [],
         submenu: false,
         submenus: {
           more: [{
@@ -54,10 +60,19 @@
         this.submenu = false
       }
     },
-
+    created() {
+      //后台查菜单
+      this.$http.post('/api/user/getAllMenus', {employeeId: this.$store.state.user.employeeId}).then(res => {
+        if(this.$CU.isSuccess(res)) {
+          this.menus = this.$CU.getResData(res).data;
+        }
+      })
+    },
     computed: {
       menus() {
-        return [{
+        return this.menus
+
+        /**return [{
           name: this.$t('menu.home'),
           id: 'welcome',
           index: '/home'
@@ -70,9 +85,9 @@
           id: 'distribute',
           index: '/distribute'
         }, {
-          name: '贷款管理',
-          id: 'loan',
-          index: '/loan'
+          name: '黑名单',
+          id: 'blacklist',
+          index: '/blacklist'
         }, {
           name: '投资理财',
           id: 'loan',
@@ -90,7 +105,7 @@
           id: 'more',
           index: '/more',
           hasChild: true
-        }]
+        }]*/
       }
     }
   }

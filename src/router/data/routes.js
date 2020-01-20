@@ -3,6 +3,7 @@ import Login from '@pages/login/Login'
 import UpdatePwd from '@pages/user/UpdatePwd'
 import UserManager from '@pages/user/UserManager'
 import DistributionSet from '@pages/distribute/DistributionSet'
+import Blacklist from '@pages/blacklist/BlacklistManager'
 //const Trans = resolve => require(['@pages/Trans'], resolve)
 
 /**
@@ -50,10 +51,10 @@ const routes = [
     }
   },
   {
-    path: '/forCash',
-    component: Home,
+    path: '/blacklist',
+    component: Blacklist,
     meta: {
-      title: '外币预约'
+      title: '黑名单'
     }
   },
   {

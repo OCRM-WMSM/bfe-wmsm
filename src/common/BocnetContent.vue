@@ -5,8 +5,7 @@
         <div class="page-container__header">
           <bfe-breadcrumb separator=">" style="font-size:16px">
             <bfe-breadcrumb-item :to="{ path: '/' }" >首页</bfe-breadcrumb-item>
-            <bfe-breadcrumb-item>活动管理</bfe-breadcrumb-item>
-            <bfe-breadcrumb-item>活动详情</bfe-breadcrumb-item>
+            <bfe-breadcrumb-item v-if="this.$route.meta.title !=='首页'">{{ this.$route.meta.title }}</bfe-breadcrumb-item>
           </bfe-breadcrumb>
          </div>
          <div class="page-container__content">

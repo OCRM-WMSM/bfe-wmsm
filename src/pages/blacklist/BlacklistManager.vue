@@ -1,6 +1,6 @@
 <template>
+  <div>
   <div class="row">
-    <div class="col-md-2"></div>
   <div class="col-md-1">
     <bfe-button type="primary" size="small" @click="templateUpload" >模板下载</bfe-button>
   </div>
@@ -22,10 +22,63 @@
         <div slot="tip" class="bfe-upload__tip">只能上传只能上传csv文件，文件大小最多为20M</div>
       </bfe-upload>
   </div>
+  <div class="col-md-7">
+ <bfe-form :inline="true" :model="formInline" class="demo-form-inline">
+
+   <bfe-form-item label="上传人编号">
+     <bfe-input v-model="formInline.uploader" placeholder="上传人编号" size="small"></bfe-input>
+   </bfe-form-item>
+   <bfe-form-item>
+     <bfe-button type="primary" @click="submitForm()" size="small">查询</bfe-button>
+   </bfe-form-item>
+ </bfe-form>
+ </div>
+</div>
+<div class="row">
+  <bfe-table
+    :data="tableData"
+    stripe
+    style="width: 100%;">
+    <bfe-table-column
+      prop="uploader"
+      label="上传人编号"
+      >
+    </bfe-table-column>
+    <bfe-table-column
+      prop="name"
+      label="上传人机构"
+      >
+    </bfe-table-column>
+    <bfe-table-column
+      prop="recordTotal"
+      label="总条数"
+      >
+    </bfe-table-column>
+    <bfe-table-column
+      prop="recordSuccess"
+      label="成功条数"
+      >
+    </bfe-table-column>
+    <bfe-table-column
+      prop="upTime"
+      label="上传时间"
+      >
+    </bfe-table-column>
+
+  </bfe-table>
+
+  <bfe-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+  </bfe-pagination>
+  </div>
 
 </div>
-
-
 </template>
 <script>
   export default {
@@ -38,6 +91,13 @@
         extraData: {
           employeeId: this.$store.state.user.employeeId,
           orgCode: this.$store.state.user.orgCode
+        },
+        tableData: [],
+        currentPage: 1,
+        total: 0,
+        pageSize: 10,
+        formInline: {
+          uploader: ''
         }
       };
     },
@@ -72,6 +132,20 @@
       },
       templateUpload() {
         window.location.href = '/api/blacklist/downloadBlackListTmp';
+      },
+      submitForm() {
+        //JSON.stringify(this.formInline)
+        if(this.formInline.uploader === null || this.formInline.uploader === '') {
+          this.formInline.uploader = this.$store.state.user.employeeId
+        }
+        this.$http.post('/api/blacklist/getBlackListHistory', {user: JSON.stringify(this.formInline), currentPage: this.currentPage,
+          pageSize: this.pageSize}).then(res => {
+          //修改成功
+            if(this.$CU.isSuccess(res)) {
+              this.tableData = this.$CU.getResData(res).data.records
+              this.total = this.$CU.getResData(res).data.total
+            }
+          })
       }
     }
   }

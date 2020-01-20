@@ -8,7 +8,7 @@
         </div>
         <div class="topbar__links col-sm-2">
           <div class="row row-right-up" >
-            <bfe-icon name="person" size="20"></bfe-icon><a>总行业务管理人员</a>
+            <bfe-icon name="person" size="20"></bfe-icon><a>{{ roleName }}</a>
             <a>{{ username }}</a>
           </div>
           <div class="row row-right-up" >
@@ -27,7 +27,8 @@
     name: 'Topbar',
     data() {
       return {
-        username: this.$store.state.user.name
+        username: this.$store.state.user.name,
+        roleName: this.$store.state.user.currentRole.roleName
       }
     },
     computed: {
@@ -87,7 +88,7 @@
   background-repeat: no-repeat;
 }
 .row-right-up {
-  --padding-left:20%;
+  padding-left:30%;
   margin-top:5px
 }
 
