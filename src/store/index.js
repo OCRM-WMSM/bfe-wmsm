@@ -21,7 +21,8 @@ const state = {
     lastMaintDate: '',
     onlineFlag: '',
     orgName: '',
-    currentRole: {}
+    currentRole: {},
+    provCode: ''
   },
   token: null
 }
