@@ -21,7 +21,7 @@
       <bfe-select v-model="distributionForm.distribution2" placeholder="请选择" @change="changeDistri2">
         <!-- <bfe-option label="请选择"></bfe-option> -->
         <bfe-option label="客户等级" value="1"></bfe-option>
-        <bfe-option label="信用卡额度" value="2"></bfe-option>
+        <bfe-option label="信用卡额度" value="4"></bfe-option>
       </bfe-select>
     </bfe-form-item>
     <bfe-form-item v-if="distributionForm.cusLvlFlag" label="客户等级" prop="cusLvl">
@@ -54,8 +54,8 @@
         <bfe-input-currency v-model="distributionForm.nobillamountend" style="width: 100%;" currency="￥" separator="," :min="0" :max="999999999" class="length1" placeholder="请输入未出账单笔消费截止金额"></bfe-input-currency>
       </div>
     </bfe-form-item>
-    <bfe-form-item v-if="distributionForm.limitFlag" label="信用卡额度" prop="limit">
-      <bfe-input-currency v-model="distributionForm.limit" currency="￥" separator="," :min="0" :max="999999999" class="length1" placeholder="请输入信用卡额度"></bfe-input-currency>
+    <bfe-form-item v-if="distributionForm.limitFlag" label="信用卡额度" prop="cardLimit">
+      <bfe-input-currency v-model="distributionForm.cardLimit" currency="￥" separator="," :min="0" :max="999999999" class="length1" placeholder="请输入信用卡额度"></bfe-input-currency>
     </bfe-form-item>
     <bfe-form-item label="分发渠道" prop="channel">
       <bfe-radio-group v-model="distributionForm.channel">
@@ -64,6 +64,9 @@
         <bfe-radio-button label="OCRM" :disabled="true"></bfe-radio-button>
       </bfe-radio-group>
     </bfe-form-item>
+    <!-- <bfe-form-item v-if="distributionForm.provCode" label="省行号">
+      <bfe-input v-model="distributionForm.provCode" value="this.$store.state.user.provCode"></bfe-input>
+    </bfe-form-item> -->
     <bfe-form-item>
       <bfe-button type="primary" @click="submitForm('distributionForm')">提交</bfe-button>
       <bfe-button @click="resetForm('distributionForm')">重置</bfe-button>
@@ -98,7 +101,7 @@ export default {
         channel: 'CRS',
         billamountst: 0,
         billamountend: 0,
-        limit: 0,
+        cardLimit: 0,
         distri1: true,
         distri2: false,
         cusLvlFlag: false,
@@ -106,15 +109,7 @@ export default {
         nobillamountFlag: false,
         limitFlag: false
       },
-      tableData: [{
-        installmentType: '账单',
-        distribution: '等级',
-        channel: 'CRS'
-      }, {
-        installmentType: '自动',
-        distribution: '已出账账单金额',
-        channel: 'OCRM'
-      }],
+      tableData: [],
       rules: {
         cusLvl: [{
           required: true,
@@ -133,13 +128,13 @@ export default {
         }]
       },
       currentPage: 1,
-      total: 400,
+      total: 0,
       pageSize: 10
     }
   },
   //页面初始化调用，节点还未渲染
   created() {
-    this.submitForm();
+    this.queryDistribution();
   },
   methods: {
     //   submitForm() {
@@ -154,6 +149,42 @@ export default {
     //         }
     //       })
     //   },
+    queryDistribution() {
+      this.$http.post('/api/distribute/queryDistribution', {
+        orgCode: this.$store.state.user.orgCode,
+        provCode: this.$store.state.user.provCode,
+        orgLvl: this.$store.state.user.orgLvl,
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      }).then(res => {
+        //查询成功
+        if (this.$CU.isSuccess(res)) {
+          console.log(this.$CU.getResData(res).data);
+          this.tableData = this.$CU.getResData(res).data.records
+          this.total = this.$CU.getResData(res).data.total
+        }
+      })
+    },
+    submitForm() {
+      //JSON.stringify(this.formInline)
+      this.$http.post('/api/distribute/setDistribution', {
+        user: JSON.stringify(this.distributionForm),
+        provCode: this.$store.state.user.provCode
+      }).then(res => {
+        //设置成功
+        if (this.$CU.isSuccess(res)) {
+          this.$message({
+            message: '设置成功!',
+            type: 'success'
+          });
+        } else {
+          this.$message({
+            message: '设置失败!',
+            type: 'error'
+          });
+        }
+      })
+    },
     changeTpye(val) {
       // console.log(val);
       // console.log(this.distributionForm.distri1);
@@ -173,7 +204,6 @@ export default {
       }
     },
     changeDistri1(val) {
-      // console.log(val);
       if (val === '1') {
         this.distributionForm.cusLvlFlag = true;
         this.distributionForm.billamountFlag = false;
@@ -187,25 +217,34 @@ export default {
         this.distributionForm.billamountFlag = false;
         this.distributionForm.nobillamountFlag = true;
       }
+    },
+    changeDistri2(val) {
+      if (val === '1') {
+        this.distributionForm.cusLvlFlag = true;
+        this.distributionForm.limitFlag = false;
+        this.distributionForm.billamountFlag = false;
+        this.distributionForm.nobillamountFlag = false;
+      } else if (val === '4') {
+        this.distributionForm.cusLvlFlag = false;
+        this.distributionForm.limitFlag = true;
+        this.distributionForm.billamountFlag = false;
+        this.distributionForm.nobillamountFlag = false;
+      }
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.submitForm();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.submitForm();
     }
-    // handleSizeChange(val) {
-    //   this.pageSize = val;
-    //   console.log(`每页 ${val} 条`);
-    //   console.log(this.pageSize);
-    //   this.submitForm();
-    // },
-    // handleCurrentChange(val) {
-    //   this.currentPage = val;
-    //   console.log(`当前页: ${val}`);
-    //   console.log(this.currentPage);
-    //   this.submitForm();
-    // }
   },
 
   resetForm(formName) {
     this.$refs[formName].resetFields();
     // this.ruleForm.creditCode = this.creditCode
-    // this.email = false
+    // this.installmentType = 1
     // this.linkman2Phone = false
     // this.linkman3Phone = false
   }
